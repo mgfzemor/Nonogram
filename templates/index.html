@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <style>
+      .small {
+           line-height: 6px;
+           min-height: 6px;
+           height: 6px;
+        }
+       .row_head {
+           line-height: 15px;
+           min-height: 15px;
+           height: 15px;
+      }
+    </style>
+    {% if nonogram%}
+		<p></p>
+
+		<div style='display:block; margin-left: 120px'>
+			<button type="button" class="btn btn-dark" >Verify solution</button> 
+			<button id='clear' type="button" class="btn btn-dark">Clear Nonogram</button>
+		</div>
+		<p></p>
+    <div style="height:250px;width:400px;display:block"> 
+    <table class="table table-bordered table-responsive-sm ">
+      <thead>
+      <tr class="row_head">
+        <th scope="col"><small>M&nbsp;&sube;&nbsp;X*Y*Z&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</small></th>
+        <th scope="col">&nbsp;</th>
+        {% for x in threeDM['X']%}
+          <th colspan="2" scope="col"><span class="badge badge-pill badge-primary">{{x}}</span></th>
+        {%endfor%}
+        {% for y in threeDM['Y']%}
+          <th colspan="2" scope="col"><span class="badge badge-pill badge-success">{{y}}</span></th>
+        {%endfor%}
+        {% for z in threeDM['Z']%}
+          <th colspan="2" scope="col"><span class="badge badge-pill badge-danger">{{z}}</span></th>
+        {%endfor%}
+        <th scope="col">&nbsp;</th>
+        <th scope="col"><small>&nbsp; Row Description</small></th>
+      </tr>  
+      </thead>
+    
+      <tbody>
+      {% for i in range(0,nonogram['h'])%}
+          <tr class="small">
+           {%if i%2 !=0 %}
+            <td> </td>
+           {%else%} 
+           <td>{%for m in threeDM['M'][i]%} {{m}} {%endfor%}</td>
+           {%endif%} 
+          {% for j in range(0,nonogram['w'])%}
+                  <td class='select' lin='{{i}}' col='{{j}}' style="cursor: pointer;	">&nbsp;</td>     
+          {%endfor%}
+            <td>
+              {% for r in nonogram['R'][i]%}
+                <small>{{r}}</small>                
+              {% endfor%}            
+            </td>
+          </tr>
+             
+      {%endfor%}
+      <tr class="row_head">
+          <td></td>
+        {%for c in nonogram['C']%}
+          <td>
+          {%for cj in c%}
+            <small>{{cj}}</small>
+          {%endfor%}
+          </td>
+        {%endfor%}
+      </tr>
+      </tbody>
+    </table>
+    </div>
+<form class="form-inline" action="{{url_for('reduce')}}" style="float:right" method="post">
+ <div class="form-group">
+  <textarea class="form-control" rows="5" name="tdm" placeholder="Input 3DM instance..."></textarea>
+</div> &nbsp;&nbsp;&nbsp;
+<button id='set' type="submit" class="btn btn-dark">Reduce</button>
+</form>
+        
+    {% else %}
+      Nothing to show...
+    {% endif%}
+			<script type=text/javascript>
+				$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+			</script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+				<script>
+			  $( document ).ready(function() {
+        		$(".select").click(function(){
+							$(this).toggleClass("table-dark");
+							var lin = $(this).attr('lin');
+							var col = $(this).attr('col');
+							//console.log(lin, col);
+
+							$.getJSON($SCRIPT_ROOT + '/paint_cell', {
+								lin: lin,
+								col: col
+							}, function(data) {
+								$("#result").text(data.result);
+							});
+							return false;
+					  });
+					
+
+					$("#clear").click(function(){
+						$("td").removeClass("table-dark");
+					});
+    		});
+		</script>
+  </body>
+</html>
