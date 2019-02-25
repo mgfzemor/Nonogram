@@ -1,7 +1,7 @@
 # :black_square_button: 3DM to NONOGRAM :white_square_button:
 Presents a graphical reduction from 3DM (3-dimensional matching) to NONOGRAM used to proof the NP-Completeness of NONOGRAM the algorithm used was proposed in: Ueda, Nobuhisa; Nagao, Tadaaki (1996), NP-completeness results for NONOGRAM via Parsimonious Reductions - [View full text](https://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.57.5277)
 
-#### Given a 3DM instance the algorithm generates a instance of NONOGRAM
+#### Given a 3DM instance the algorithm generates a instance of NONOGRAM, then you can start to color the cells that satisfy row and column constraints, finally press "Verify solution" button to check that your solution is correct.
 ##### Example of 3DM instance
 X = {x1,x2,x3}; Y = {y1,y2,y3}; Z = {z1,z2,z3}
 
@@ -13,6 +13,7 @@ n = |M| = 6
 
 q = |M'| = |X| = |Y| = |Z| = 3
 ##### Output
+![GitHub Logo](https://github.com/mgfzemor/Nonogram/blob/master/docs/img/example1.png)
 
 
 ### :floppy_disk: Prerequisites
