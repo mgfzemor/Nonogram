@@ -27,3 +27,8 @@ $ cd Nonogram/ && virtualenv env
 ```bash
 $ . /env/bin/activate && pip install -r requirements.txt
 ```
+
+- Run application
+```bash
+$ flask run
+```
