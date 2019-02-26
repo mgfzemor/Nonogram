@@ -40,7 +40,7 @@ $ cd Nonogram/ && virtualenv env
 
 - Active the virtualenv and install requirements
 ```bash
-$ . /env/bin/activate && pip install -r requirements.txt
+$ . env/bin/activate && pip install -r requirements.txt
 ```
 
 - Run application
